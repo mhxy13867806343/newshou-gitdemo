@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git 命令文档 - 完整参考手册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .contact-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .category-filter {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgb(255 58 58);
+            border-color: rgb(255 4 4);
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .command-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid #667eea;
+        }
+
+        .command-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .command-card.active {
+            border-left-color: #764ba2;
+            background: #f8f9ff;
+        }
+
+        .command-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .command-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .command-syntax {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .command-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .detail-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .detail-panel.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .example-section {
+            margin-bottom: 25px;
+        }
+
+        .example-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+            overflow-x: auto;
+        }
+
+        .code-block .command {
+            color: #68d391;
+        }
+
+        .code-block .comment {
+            color: #a0aec0;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 50px;
+        }
+
+        .explanation {
+            background: #f0f4f8;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Git 命令文档 - 完整参考手册</h1>
+            <p>完整的 Git 命令参考手册，包含详细示例和用法说明</p>
+            
+            <div class="contact-info">
+                <h3>📞 联系方式 & 相关链接</h3>
+                <div class="contact-links">
+                    <a href="https://github.com/mhxy13867806343/newshou-gitdemo.git" target="_blank">
+                        🔗 项目仓库
+                    </a>
+                    <a href="mailto:869710179@qq.com">
+                        📧 邮箱联系
+                    </a>
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=udXaytje0NHW1tLK_d-WwdTY0NWX2tbU" target="_blank">
+                        <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" alt="QQ邮箱" style="height: 16px;"/>
+                        QQ邮箱
+                    </a>
+                    <a href="https://blog.lcs200.icu/" target="_blank">
+                        🌐 个人博客
+                    </a>
+                    <a href="https://github.com/mhxy13867806343?tab=repositories" target="_blank">
+                        📚 GitHub仓库
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="搜索 Git 命令..." id="searchInput"
+            onkeyup="searchCommands()"
+            >
+        </div>
+
+        <div class="category-filter">
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="配置和设置">配置和设置</button>
+            <button class="filter-btn" data-category="创建和管理项目">创建和管理项目</button>
+            <button class="filter-btn" data-category="基本快照">基本快照</button>
+            <button class="filter-btn" data-category="分支和合并">分支和合并</button>
+            <button class="filter-btn" data-category="共享和更新">共享和更新</button>
+            <button class="filter-btn" data-category="检查历史和状态">检查历史和状态</button>
+            <button class="filter-btn" data-category="撤销操作">撤销操作</button>
+            <button class="filter-btn" data-category="标签">标签</button>
+            <button class="filter-btn" data-category="临时存储">临时存储</button>
+        </div>
+
+        <div id="commandsView">
+            <div class="commands-grid" id="commandsGrid">
+                <!-- Git commands will be populated here -->
+            </div>
+            <div class="no-results hidden" id="noResults">
+                <p>没有找到匹配的命令</p>
+            </div>
+        </div>
+
+        <div id="detailView" class="detail-panel">
+            <button class="back-btn" onclick="showCommandsList()">← 返回命令列表</button>
+            <div id="detailContent">
+                <!-- Command details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const gitCommands = [
+            // 配置和设置
+            {
+                name: 'git config',
+                description: '配置 Git 设置',
+                syntax: 'git config [--global] <key> <value>',
+                category: '配置和设置',
+                examples: [
+                    {
+                        title: '设置用户名',
+                        code: 'git config --global user.name "Your Name"',
+                        explanation: '设置全局用户名，用于所有提交'
+                    },
+                    {
+                        title: '设置邮箱',
+                        code: 'git config --global user.email "your.email@example.com"',
+                        explanation: '设置全局邮箱地址'
+                    },
+                    {
+                        title: '查看配置',
+                        code: 'git config --list',
+                        explanation: '查看所有配置信息'
+                    }
+                ]
+            },
+            {
+                name: 'git init',
+                description: '初始化一个新的 Git 仓库',
+                syntax: 'git init [directory]',
+                category: '创建和管理项目',
+                examples: [
+                    {
+                        title: '在当前目录初始化仓库',
+                        code: 'git init',
+                        explanation: '在当前目录创建一个新的 Git 仓库'
+                    },
+                    {
+                        title: '在指定目录初始化仓库',
+                        code: 'git init my-project',
+                        explanation: '创建名为 my-project 的目录并初始化 Git 仓库'
+                    }
+                ]
+            },
+            {
+                name: 'git clone',
+                description: '克隆远程仓库到本地',
+                syntax: 'git clone <repository-url> [directory]',
+                category: '创建和管理项目',
+                examples: [
+                    {
+                        title: '克隆远程仓库',
+                        code: 'git clone https://github.com/user/repo.git',
+                        explanation: '将远程仓库克隆到当前目录'
+                    },
+                    {
+                        title: '克隆到指定目录',
+                        code: 'git clone https://github.com/user/repo.git my-folder',
+                        explanation: '将远程仓库克隆到 my-folder 目录'
+                    }
+                ]
+            },
+            {
+                name: 'git add',
+                description: '将文件添加到暂存区',
+                syntax: 'git add <file>',
+                category: '基本快照',
+                examples: [
+                    {
+                        title: '添加单个文件',
+                        code: 'git add index.html',
+                        explanation: '将 index.html 文件添加到暂存区'
+                    },
+                    {
+                        title: '添加所有文件',
+                        code: 'git add .',
+                        explanation: '将当前目录下所有修改的文件添加到暂存区'
+                    }
+                ]
+            },
+            {
+                name: 'git commit',
+                description: '提交暂存区的文件到仓库',
+                syntax: 'git commit -m "message"',
+                category: '基本快照',
+                examples: [
+                    {
+                        title: '提交并添加消息',
+                        code: 'git commit -m "Add new feature"',
+                        explanation: '提交暂存区文件并添加提交消息'
+                    },
+                    {
+                        title: '提交所有修改',
+                        code: 'git commit -am "Fix bug"',
+                        explanation: '自动添加所有修改的文件并提交'
+                    }
+                ]
+            },
+            {
+                name: 'git status',
+                description: '查看工作区和暂存区的状态',
+                syntax: 'git status',
+                category: '基本快照',
+                examples: [
+                    {
+                        title: '查看详细状态',
+                        code: 'git status',
+                        explanation: '显示工作区和暂存区的详细状态信息'
+                    },
+                    {
+                        title: '查看简短状态',
+                        code: 'git status -s',
+                        explanation: '以简短格式显示状态信息'
+                    }
+                ]
+            },
+            {
+                name: 'git branch',
+                description: '管理分支',
+                syntax: 'git branch [options] [branch-name]',
+                category: '分支和合并',
+                examples: [
+                    {
+                        title: '查看所有分支',
+                        code: 'git branch',
+                        explanation: '列出所有本地分支'
+                    },
+                    {
+                        title: '创建新分支',
+                        code: 'git branch feature-login',
+                        explanation: '创建名为 feature-login 的新分支'
+                    }
+                ]
+            },
+            {
+                name: 'git checkout',
+                description: '切换分支或恢复文件',
+                syntax: 'git checkout <branch-name>',
+                category: '分支和合并',
+                examples: [
+                    {
+                        title: '切换分支',
+                        code: 'git checkout develop',
+                        explanation: '切换到 develop 分支'
+                    },
+                    {
+                        title: '创建并切换分支',
+                        code: 'git checkout -b feature-new',
+                        explanation: '创建 feature-new 分支并切换到该分支'
+                    }
+                ]
+            },
+            {
+                name: 'git merge',
+                description: '合并分支',
+                syntax: 'git merge <branch-name>',
+                category: '分支和合并',
+                examples: [
+                    {
+                        title: '合并分支',
+                        code: 'git merge feature-login',
+                        explanation: '将 feature-login 分支合并到当前分支'
+                    }
+                ]
+            },
+            {
+                name: 'git pull',
+                description: '从远程仓库拉取并合并',
+                syntax: 'git pull [remote] [branch]',
+                category: '共享和更新',
+                examples: [
+                    {
+                        title: '拉取当前分支',
+                        code: 'git pull',
+                        explanation: '从远程仓库拉取当前分支的最新更改'
+                    },
+                    {
+                        title: '拉取指定分支',
+                        code: 'git pull origin main',
+                        explanation: '从 origin 远程仓库拉取 main 分支'
+                    }
+                ]
+            },
+            {
+                name: 'git push',
+                description: '推送到远程仓库',
+                syntax: 'git push [remote] [branch]',
+                category: '共享和更新',
+                examples: [
+                    {
+                        title: '推送当前分支',
+                        code: 'git push',
+                        explanation: '推送当前分支到远程仓库'
+                    },
+                    {
+                        title: '推送到指定远程分支',
+                        code: 'git push origin main',
+                        explanation: '推送到 origin 远程仓库的 main 分支'
+                    }
+                ]
+            },
+            {
+                name: 'git log',
+                description: '查看提交历史',
+                syntax: 'git log [options]',
+                category: '检查历史和状态',
+                examples: [
+                    {
+                        title: '查看提交历史',
+                        code: 'git log',
+                        explanation: '显示详细的提交历史'
+                    },
+                    {
+                        title: '单行显示提交历史',
+                        code: 'git log --oneline',
+                        explanation: '以单行格式显示提交历史'
+                    }
+                ]
+            },
+            {
+                name: 'git diff',
+                description: '显示文件差异',
+                syntax: 'git diff [options]',
+                category: '基本快照',
+                examples: [
+                    {
+                        title: '查看工作区差异',
+                        code: 'git diff',
+                        explanation: '显示工作区与暂存区的差异'
+                    },
+                    {
+                        title: '查看暂存区差异',
+                        code: 'git diff --staged',
+                        explanation: '显示暂存区与最后提交的差异'
+                    }
+                ]
+            },
+            {
+                name: 'git reset',
+                description: '重置到指定状态',
+                syntax: 'git reset [options] [commit]',
+                category: '撤销操作',
+                examples: [
+                    {
+                        title: '软重置',
+                        code: 'git reset --soft HEAD~1',
+                        explanation: '撤销最后一次提交，保留更改在暂存区'
+                    },
+                    {
+                        title: '硬重置',
+                        code: 'git reset --hard HEAD~1',
+                        explanation: '撤销最后一次提交，丢弃所有更改'
+                    }
+                ]
+            },
+            {
+                name: 'git stash',
+                description: '临时存储更改',
+                syntax: 'git stash [options]',
+                category: '临时存储',
+                examples: [
+                    {
+                        title: '存储当前更改',
+                        code: 'git stash',
+                        explanation: '将当前工作区更改存储起来'
+                    },
+                    {
+                        title: '应用最新存储',
+                        code: 'git stash pop',
+                        explanation: '应用并删除最新的存储'
+                    }
+                ]
+            },
+            {
+                name: 'git tag',
+                description: '管理标签',
+                syntax: 'git tag [options] [tag-name]',
+                category: '标签',
+                examples: [
+                    {
+                        title: '查看所有标签',
+                        code: 'git tag',
+                        explanation: '列出所有标签'
+                    },
+                    {
+                        title: '创建标签',
+                        code: 'git tag v1.0.0',
+                        explanation: '在当前提交创建标签'
+                    }
+                ]
+            }
+        ];
+
+        let currentFilter = 'all';
+        let filteredCommands = gitCommands;
+
+        function renderCommands(commands) {
+            const grid = document.getElementById('commandsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (commands.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            grid.innerHTML = commands.map(cmd => `
+                <div class="command-card" onclick="showCommandDetail('${cmd.name}')">
+                    <div class="command-category">${cmd.category}</div>
+                    <div class="command-title">${cmd.name}</div>
+                    <div class="command-description">${cmd.description}</div>
+                    <div class="command-syntax">${cmd.syntax}</div>
+                </div>
+            `).join('');
+        }
+
+        function showCommandDetail(commandName) {
+            const command = gitCommands.find(cmd => cmd.name === commandName);
+            if (!command) return;
+
+            const detailContent = document.getElementById('detailContent');
+            detailContent.innerHTML = `
+                <div class="detail-title">${command.name}</div>
+                <p><strong>描述：</strong>${command.description}</p>
+                <p><strong>语法：</strong><code>${command.syntax}</code></p>
+                <p><strong>分类：</strong>${command.category}</p>
+                <h3>示例：</h3>
+                ${command.examples.map(example => `
+                    <div class="example-section">
+                        <div class="example-title">${example.title}</div>
+                        <div class="code-block">
+                            <span class="command">${example.code}</span>
+                        </div>
+                        <div class="explanation">${example.explanation}</div>
+                    </div>
+                `).join('')}
+            `;
+
+            document.getElementById('commandsView').style.display = 'none';
+            document.getElementById('detailView').classList.add('show');
+        }
+
+        function showCommandsList() {
+            document.getElementById('detailView').classList.remove('show');
+            document.getElementById('commandsView').style.display = 'block';
+        }
+
+        function filterCommands(category) {
+            currentFilter = category;
+            
+            // Update filter button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            
+            // Filter commands
+            if (category === 'all') {
+                filteredCommands = gitCommands;
+            } else {
+                filteredCommands = gitCommands.filter(cmd => cmd.category === category);
+            }
+            
+            // Apply search if there's a search term
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredCommands = filteredCommands.filter(cmd => 
+                    cmd.name.toLowerCase().includes(searchTerm) ||
+                    cmd.description.toLowerCase().includes(searchTerm) ||
+                    cmd.examples.some(example => 
+                        example.title.toLowerCase().includes(searchTerm) ||
+                        example.code.toLowerCase().includes(searchTerm) ||
+                        example.explanation.toLowerCase().includes(searchTerm)
+                    )
+                );
+            }
+            
+            renderCommands(filteredCommands);
+        }
+
+        function searchCommands() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm === '') {
+                // If search is empty, show filtered commands based on current category
+                filterCommands(currentFilter);
+                return;
+            }
+            
+            // Start with current category filter
+            let commandsToSearch = currentFilter === 'all' ? gitCommands : 
+                gitCommands.filter(cmd => cmd.category === currentFilter);
+            
+            // Apply search filter
+            filteredCommands = commandsToSearch.filter(cmd => 
+                cmd.name.toLowerCase().includes(searchTerm) ||
+                cmd.description.toLowerCase().includes(searchTerm) ||
+                cmd.examples.some(example => 
+                    example.title.toLowerCase().includes(searchTerm) ||
+                    example.code.toLowerCase().includes(searchTerm) ||
+                    example.explanation.toLowerCase().includes(searchTerm)
+                )
+            );
+            
+            renderCommands(filteredCommands);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', searchCommands);
+        
+        // Add event listeners for filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterCommands(btn.dataset.category);
+            });
+        });
+
+        // Initial render
+        renderCommands(gitCommands);
+    </script>
+</body>
+</html>

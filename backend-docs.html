@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后端技术栈文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .contact-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .command-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+        }
+
+        .command-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .command-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .command-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            margin-right: 8px;
+        }
+
+        .detail-view {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .detail-description {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .examples {
+            margin-top: 20px;
+        }
+
+        .example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .example-title {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .example-code {
+            color: #e8e8e8;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .close-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .commands-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-buttons {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="main.html" class="back-btn">← 返回主页</a>
+        
+        <div class="header">
+            <h1>🚀 后端技术栈文档</h1>
+            <p>Node.js、Python、Java 等后端技术栈完整指南</p>
+            
+            <div class="contact-info">
+                <h3>📞 联系方式 & 相关链接</h3>
+                <div class="contact-links">
+                    <a href="https://github.com/mhxy13867806343/newshou-gitdemo.git" target="_blank">
+                        🔗 项目仓库
+                    </a>
+                    <a href="mailto:869710179@qq.com">
+                        📧 邮箱联系
+                    </a>
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=udXaytje0NHW1tLK_d-WwdTY0NWX2tbU" target="_blank">
+                        <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" alt="QQ邮箱" style="height: 16px;"/>
+                        QQ邮箱
+                    </a>
+                    <a href="https://blog.lcs200.icu/" target="_blank">
+                        🌐 个人博客
+                    </a>
+                    <a href="https://github.com/mhxy13867806343?tab=repositories" target="_blank">
+                        📚 GitHub仓库
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="搜索后端技术..." id="searchInput">
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-category="all">全部</button>
+            <button class="filter-btn" data-category="nodejs">Node.js</button>
+            <button class="filter-btn" data-category="python">Python</button>
+            <button class="filter-btn" data-category="java">Java</button>
+            <button class="filter-btn" data-category="api">API设计</button>
+            <button class="filter-btn" data-category="database">数据库</button>
+            <button class="filter-btn" data-category="deploy">部署运维</button>
+            <button class="filter-btn" data-category="security">安全</button>
+            <button class="filter-btn" data-category="performance">性能优化</button>
+        </div>
+
+        <div class="commands-grid" id="commandsGrid">
+            <!-- Commands will be populated by JavaScript -->
+        </div>
+
+        <div class="no-results" id="noResults">
+            没有找到匹配的技术内容
+        </div>
+
+        <div class="detail-view" id="detailView">
+            <button class="close-btn" onclick="hideDetail()">关闭</button>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const backendTechnologies = [
+            {
+                name: "Express.js 基础",
+                category: "nodejs",
+                description: "Node.js Web应用框架的基本使用",
+                technologies: ["Node.js", "Express"],
+                examples: [
+                    {
+                        title: "创建基本服务器",
+                        code: "const express = require('express');\nconst app = express();\nconst PORT = 3000;\n\napp.use(express.json());\n\napp.get('/', (req, res) => {\n    res.json({ message: 'Hello World!' });\n});\n\napp.listen(PORT, () => {\n    console.log(`Server running on port ${PORT}`);\n});"
+                    },
+                    {
+                        title: "路由和中间件",
+                        code: "// 中间件\napp.use((req, res, next) => {\n    console.log(`${req.method} ${req.path}`);\n    next();\n});\n\n// 路由\napp.get('/users/:id', (req, res) => {\n    const userId = req.params.id;\n    res.json({ userId, name: 'John Doe' });\n});\n\napp.post('/users', (req, res) => {\n    const { name, email } = req.body;\n    res.status(201).json({ id: 1, name, email });\n});"
+                    }
+                ]
+            },
+            {
+                name: "NPM 包管理",
+                category: "nodejs",
+                description: "Node.js 包管理器的使用",
+                technologies: ["NPM", "Node.js"],
+                examples: [
+                    {
+                        title: "基本命令",
+                        code: "# 初始化项目\nnpm init -y\n\n# 安装依赖\nnpm install express\nnpm install --save-dev nodemon\n\n# 全局安装\nnpm install -g pm2\n\n# 更新包\nnpm update\nnpm outdated"
+                    },
+                    {
+                        title: "package.json 脚本",
+                        code: "{\n  \"scripts\": {\n    \"start\": \"node server.js\",\n    \"dev\": \"nodemon server.js\",\n    \"test\": \"jest\",\n    \"build\": \"webpack --mode production\"\n  }\n}\n\n# 运行脚本\nnpm run dev\nnpm start\nnpm test"
+                    }
+                ]
+            },
+            {
+                name: "异步编程",
+                category: "nodejs",
+                description: "Promise、async/await 和回调函数",
+                technologies: ["JavaScript", "Node.js"],
+                examples: [
+                    {
+                        title: "Promise 和 async/await",
+                        code: "// Promise\nfunction fetchUser(id) {\n    return new Promise((resolve, reject) => {\n        setTimeout(() => {\n            resolve({ id, name: 'John' });\n        }, 1000);\n    });\n}\n\n// async/await\nasync function getUser(id) {\n    try {\n        const user = await fetchUser(id);\n        console.log(user);\n        return user;\n    } catch (error) {\n        console.error('Error:', error);\n    }\n}"
+                    },
+                    {
+                        title: "并发处理",
+                        code: "// 并行执行\nconst users = await Promise.all([\n    fetchUser(1),\n    fetchUser(2),\n    fetchUser(3)\n]);\n\n// 顺序执行\nconst results = [];\nfor (const id of [1, 2, 3]) {\n    const user = await fetchUser(id);\n    results.push(user);\n}"
+                    }
+                ]
+            },
+            {
+                name: "Flask 基础",
+                category: "python",
+                description: "Python Web框架 Flask 的基本使用",
+                technologies: ["Python", "Flask"],
+                examples: [
+                    {
+                        title: "创建基本应用",
+                        code: "from flask import Flask, jsonify, request\n\napp = Flask(__name__)\n\n@app.route('/')\ndef hello_world():\n    return jsonify({'message': 'Hello World!'})\n\n@app.route('/users/<int:user_id>')\ndef get_user(user_id):\n    return jsonify({'id': user_id, 'name': 'John Doe'})\n\n@app.route('/users', methods=['POST'])\ndef create_user():\n    data = request.get_json()\n    return jsonify({'id': 1, **data}), 201\n\nif __name__ == '__main__':\n    app.run(debug=True)"
+                    },
+                    {
+                        title: "蓝图和错误处理",
+                        code: "from flask import Blueprint\n\n# 创建蓝图\napi = Blueprint('api', __name__, url_prefix='/api')\n\n@api.route('/health')\ndef health_check():\n    return jsonify({'status': 'healthy'})\n\n# 错误处理\n@app.errorhandler(404)\ndef not_found(error):\n    return jsonify({'error': 'Not found'}), 404\n\n@app.errorhandler(500)\ndef internal_error(error):\n    return jsonify({'error': 'Internal server error'}), 500\n\n# 注册蓝图\napp.register_blueprint(api)"
+                    }
+                ]
+            },
+            {
+                name: "Django REST Framework",
+                category: "python",
+                description: "Django REST API 开发",
+                technologies: ["Python", "Django", "DRF"],
+                examples: [
+                    {
+                        title: "序列化器和视图",
+                        code: "from rest_framework import serializers, viewsets\nfrom rest_framework.response import Response\nfrom .models import User\n\nclass UserSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = User\n        fields = ['id', 'username', 'email', 'created_at']\n\nclass UserViewSet(viewsets.ModelViewSet):\n    queryset = User.objects.all()\n    serializer_class = UserSerializer\n    \n    def create(self, request):\n        serializer = self.get_serializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        user = serializer.save()\n        return Response(serializer.data, status=201)"
+                    },
+                    {
+                        title: "URL 配置",
+                        code: "from django.urls import path, include\nfrom rest_framework.routers import DefaultRouter\nfrom .views import UserViewSet\n\nrouter = DefaultRouter()\nrouter.register(r'users', UserViewSet)\n\nurlpatterns = [\n    path('api/', include(router.urls)),\n    path('api-auth/', include('rest_framework.urls')),\n]"
+                    }
+                ]
+            },
+            {
+                name: "Spring Boot 基础",
+                category: "java",
+                description: "Java Spring Boot 框架基础",
+                technologies: ["Java", "Spring Boot"],
+                examples: [
+                    {
+                        title: "REST Controller",
+                        code: "@RestController\n@RequestMapping(\"/api/users\")\npublic class UserController {\n    \n    @Autowired\n    private UserService userService;\n    \n    @GetMapping\n    public ResponseEntity<List<User>> getAllUsers() {\n        List<User> users = userService.findAll();\n        return ResponseEntity.ok(users);\n    }\n    \n    @GetMapping(\"/{id}\")\n    public ResponseEntity<User> getUserById(@PathVariable Long id) {\n        User user = userService.findById(id);\n        return ResponseEntity.ok(user);\n    }\n    \n    @PostMapping\n    public ResponseEntity<User> createUser(@RequestBody User user) {\n        User savedUser = userService.save(user);\n        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);\n    }\n}"
+                    },
+                    {
+                        title: "JPA Repository",
+                        code: "@Entity\n@Table(name = \"users\")\npublic class User {\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long id;\n    \n    @Column(nullable = false, unique = true)\n    private String username;\n    \n    @Column(nullable = false)\n    private String email;\n    \n    // getters and setters\n}\n\n@Repository\npublic interface UserRepository extends JpaRepository<User, Long> {\n    Optional<User> findByUsername(String username);\n    List<User> findByEmailContaining(String email);\n}"
+                    }
+                ]
+            },
+            {
+                name: "RESTful API 设计",
+                category: "api",
+                description: "REST API 设计最佳实践",
+                technologies: ["REST", "HTTP"],
+                examples: [
+                    {
+                        title: "资源命名和HTTP方法",
+                        code: "# 资源命名规范\nGET    /api/users          # 获取用户列表\nGET    /api/users/123      # 获取特定用户\nPOST   /api/users          # 创建新用户\nPUT    /api/users/123      # 更新用户\nPATCH  /api/users/123      # 部分更新用户\nDELETE /api/users/123      # 删除用户\n\n# 嵌套资源\nGET    /api/users/123/posts     # 获取用户的文章\nPOST   /api/users/123/posts     # 为用户创建文章"
+                    },
+                    {
+                        title: "状态码和响应格式",
+                        code: "# 常用状态码\n200 OK              # 成功\n201 Created         # 创建成功\n204 No Content      # 删除成功\n400 Bad Request     # 请求错误\n401 Unauthorized    # 未授权\n403 Forbidden       # 禁止访问\n404 Not Found       # 资源不存在\n500 Internal Error  # 服务器错误\n\n# 统一响应格式\n{\n  \"success\": true,\n  \"data\": {...},\n  \"message\": \"操作成功\",\n  \"timestamp\": \"2023-12-01T10:00:00Z\"\n}"
+                    }
+                ]
+            },
+            {
+                name: "JWT 认证",
+                category: "security",
+                description: "JSON Web Token 身份认证",
+                technologies: ["JWT", "Authentication"],
+                examples: [
+                    {
+                        title: "Node.js JWT 实现",
+                        code: "const jwt = require('jsonwebtoken');\nconst bcrypt = require('bcrypt');\n\n// 生成 token\nfunction generateToken(user) {\n    return jwt.sign(\n        { id: user.id, username: user.username },\n        process.env.JWT_SECRET,\n        { expiresIn: '24h' }\n    );\n}\n\n// 验证 token 中间件\nfunction authenticateToken(req, res, next) {\n    const authHeader = req.headers['authorization'];\n    const token = authHeader && authHeader.split(' ')[1];\n    \n    if (!token) {\n        return res.sendStatus(401);\n    }\n    \n    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {\n        if (err) return res.sendStatus(403);\n        req.user = user;\n        next();\n    });\n}"
+                    },
+                    {
+                        title: "登录和注册",
+                        code: "// 注册\napp.post('/register', async (req, res) => {\n    const { username, password } = req.body;\n    const hashedPassword = await bcrypt.hash(password, 10);\n    \n    const user = await User.create({\n        username,\n        password: hashedPassword\n    });\n    \n    const token = generateToken(user);\n    res.json({ token, user: { id: user.id, username } });\n});\n\n// 登录\napp.post('/login', async (req, res) => {\n    const { username, password } = req.body;\n    const user = await User.findOne({ username });\n    \n    if (user && await bcrypt.compare(password, user.password)) {\n        const token = generateToken(user);\n        res.json({ token, user: { id: user.id, username } });\n    } else {\n        res.status(401).json({ error: 'Invalid credentials' });\n    }\n});"
+                    }
+                ]
+            },
+            {
+                name: "数据库连接池",
+                category: "database",
+                description: "数据库连接池配置和优化",
+                technologies: ["Database", "Connection Pool"],
+                examples: [
+                    {
+                        title: "Node.js MySQL 连接池",
+                        code: "const mysql = require('mysql2/promise');\n\n// 创建连接池\nconst pool = mysql.createPool({\n    host: 'localhost',\n    user: 'root',\n    password: 'password',\n    database: 'myapp',\n    waitForConnections: true,\n    connectionLimit: 10,\n    queueLimit: 0,\n    acquireTimeout: 60000,\n    timeout: 60000\n});\n\n// 使用连接池\nasync function getUser(id) {\n    try {\n        const [rows] = await pool.execute(\n            'SELECT * FROM users WHERE id = ?',\n            [id]\n        );\n        return rows[0];\n    } catch (error) {\n        console.error('Database error:', error);\n        throw error;\n    }\n}"
+                    },
+                    {
+                        title: "Python SQLAlchemy 连接池",
+                        code: "from sqlalchemy import create_engine\nfrom sqlalchemy.pool import QueuePool\n\n# 创建引擎和连接池\nengine = create_engine(\n    'mysql+pymysql://user:password@localhost/myapp',\n    poolclass=QueuePool,\n    pool_size=10,\n    max_overflow=20,\n    pool_pre_ping=True,\n    pool_recycle=3600\n)\n\n# 使用连接\nwith engine.connect() as conn:\n    result = conn.execute(\n        text('SELECT * FROM users WHERE id = :id'),\n        {'id': user_id}\n    )\n    user = result.fetchone()"
+                    }
+                ]
+            },
+            {
+                name: "Docker 容器化",
+                category: "deploy",
+                description: "应用容器化部署",
+                technologies: ["Docker", "Container"],
+                examples: [
+                    {
+                        title: "Node.js Dockerfile",
+                        code: "# 多阶段构建\nFROM node:16-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\nFROM node:16-alpine AS runtime\nWORKDIR /app\n\n# 创建非root用户\nRUN addgroup -g 1001 -S nodejs\nRUN adduser -S nextjs -u 1001\n\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY . .\n\nUSER nextjs\nEXPOSE 3000\n\nCMD [\"node\", \"server.js\"]"
+                    },
+                    {
+                        title: "docker-compose.yml",
+                        code: "version: '3.8'\nservices:\n  app:\n    build: .\n    ports:\n      - \"3000:3000\"\n    environment:\n      - NODE_ENV=production\n      - DB_HOST=db\n    depends_on:\n      - db\n      - redis\n\n  db:\n    image: mysql:8.0\n    environment:\n      MYSQL_ROOT_PASSWORD: rootpassword\n      MYSQL_DATABASE: myapp\n    volumes:\n      - db_data:/var/lib/mysql\n\n  redis:\n    image: redis:7-alpine\n    ports:\n      - \"6379:6379\"\n\nvolumes:\n  db_data:"
+                    }
+                ]
+            },
+            {
+                name: "缓存策略",
+                category: "performance",
+                description: "应用缓存优化策略",
+                technologies: ["Cache", "Redis", "Performance"],
+                examples: [
+                    {
+                        title: "Redis 缓存实现",
+                        code: "const redis = require('redis');\nconst client = redis.createClient();\n\n// 缓存装饰器\nfunction cache(ttl = 3600) {\n    return function(target, propertyName, descriptor) {\n        const method = descriptor.value;\n        \n        descriptor.value = async function(...args) {\n            const key = `${propertyName}:${JSON.stringify(args)}`;\n            \n            // 尝试从缓存获取\n            const cached = await client.get(key);\n            if (cached) {\n                return JSON.parse(cached);\n            }\n            \n            // 执行原方法\n            const result = await method.apply(this, args);\n            \n            // 存入缓存\n            await client.setex(key, ttl, JSON.stringify(result));\n            return result;\n        };\n    };\n}\n\nclass UserService {\n    @cache(1800) // 30分钟缓存\n    async getUserById(id) {\n        return await User.findById(id);\n    }\n}"
+                    },
+                    {
+                        title: "缓存更新策略",
+                        code: "// Cache-Aside 模式\nasync function getUser(id) {\n    // 1. 先查缓存\n    let user = await redis.get(`user:${id}`);\n    if (user) {\n        return JSON.parse(user);\n    }\n    \n    // 2. 缓存未命中，查数据库\n    user = await db.findUser(id);\n    if (user) {\n        // 3. 写入缓存\n        await redis.setex(`user:${id}`, 3600, JSON.stringify(user));\n    }\n    return user;\n}\n\n// Write-Through 模式\nasync function updateUser(id, data) {\n    // 1. 更新数据库\n    const user = await db.updateUser(id, data);\n    \n    // 2. 同时更新缓存\n    await redis.setex(`user:${id}`, 3600, JSON.stringify(user));\n    \n    return user;\n}"
+                    }
+                ]
+            },
+            {
+                name: "API 限流",
+                category: "security",
+                description: "API 请求频率限制",
+                technologies: ["Rate Limiting", "Security"],
+                examples: [
+                    {
+                        title: "Express 限流中间件",
+                        code: "const rateLimit = require('express-rate-limit');\nconst RedisStore = require('rate-limit-redis');\nconst redis = require('redis');\n\nconst client = redis.createClient();\n\n// 基本限流\nconst limiter = rateLimit({\n    windowMs: 15 * 60 * 1000, // 15分钟\n    max: 100, // 最多100个请求\n    message: {\n        error: 'Too many requests, please try again later.'\n    },\n    standardHeaders: true,\n    legacyHeaders: false,\n});\n\n// Redis 存储的限流\nconst advancedLimiter = rateLimit({\n    store: new RedisStore({\n        sendCommand: (...args) => client.sendCommand(args),\n    }),\n    windowMs: 15 * 60 * 1000,\n    max: 100,\n});\n\napp.use('/api/', limiter);"
+                    },
+                    {
+                        title: "自定义限流策略",
+                        code: "// 滑动窗口限流\nclass SlidingWindowLimiter {\n    constructor(redis, windowSize, maxRequests) {\n        this.redis = redis;\n        this.windowSize = windowSize;\n        this.maxRequests = maxRequests;\n    }\n    \n    async isAllowed(key) {\n        const now = Date.now();\n        const window = Math.floor(now / this.windowSize);\n        const redisKey = `rate_limit:${key}:${window}`;\n        \n        const current = await this.redis.incr(redisKey);\n        \n        if (current === 1) {\n            await this.redis.expire(redisKey, this.windowSize / 1000);\n        }\n        \n        return current <= this.maxRequests;\n    }\n}\n\n// 使用示例\nconst limiter = new SlidingWindowLimiter(redis, 60000, 10);\n\napp.use(async (req, res, next) => {\n    const clientId = req.ip;\n    const allowed = await limiter.isAllowed(clientId);\n    \n    if (!allowed) {\n        return res.status(429).json({ error: 'Rate limit exceeded' });\n    }\n    \n    next();\n});"
+                    }
+                ]
+            },
+            {
+                name: "日志管理",
+                category: "deploy",
+                description: "应用日志记录和管理",
+                technologies: ["Logging", "Monitoring"],
+                examples: [
+                    {
+                        title: "Winston 日志配置",
+                        code: "const winston = require('winston');\nconst { combine, timestamp, errors, json } = winston.format;\n\n// 创建日志器\nconst logger = winston.createLogger({\n    level: process.env.LOG_LEVEL || 'info',\n    format: combine(\n        errors({ stack: true }),\n        timestamp(),\n        json()\n    ),\n    defaultMeta: { service: 'user-service' },\n    transports: [\n        new winston.transports.File({ \n            filename: 'logs/error.log', \n            level: 'error' \n        }),\n        new winston.transports.File({ \n            filename: 'logs/combined.log' \n        })\n    ],\n});\n\n// 开发环境添加控制台输出\nif (process.env.NODE_ENV !== 'production') {\n    logger.add(new winston.transports.Console({\n        format: winston.format.simple()\n    }));\n}"
+                    },
+                    {
+                        title: "请求日志中间件",
+                        code: "// 请求日志中间件\nfunction requestLogger(req, res, next) {\n    const start = Date.now();\n    \n    res.on('finish', () => {\n        const duration = Date.now() - start;\n        \n        logger.info('HTTP Request', {\n            method: req.method,\n            url: req.url,\n            statusCode: res.statusCode,\n            duration: `${duration}ms`,\n            userAgent: req.get('User-Agent'),\n            ip: req.ip,\n            userId: req.user?.id\n        });\n    });\n    \n    next();\n}\n\n// 错误日志\nfunction errorLogger(err, req, res, next) {\n    logger.error('Application Error', {\n        error: err.message,\n        stack: err.stack,\n        method: req.method,\n        url: req.url,\n        userId: req.user?.id\n    });\n    \n    next(err);\n}\n\napp.use(requestLogger);\napp.use(errorLogger);"
+                    }
+                ]
+            }
+        ];
+
+        function renderCommands(commands = backendTechnologies) {
+            const grid = document.getElementById('commandsGrid');
+            const noResults = document.getElementById('noResults');
+            
+            if (commands.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            grid.innerHTML = commands.map(cmd => `
+                <div class="command-card" onclick="showCommandDetail('${cmd.name}')">
+                    <div class="command-name">${cmd.name}</div>
+                    <div class="command-desc">${cmd.description}</div>
+                    <div>
+                        ${cmd.technologies.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showCommandDetail(commandName) {
+            const command = backendTechnologies.find(cmd => cmd.name === commandName);
+            if (!command) return;
+            
+            const detailContent = document.getElementById('detailContent');
+            detailContent.innerHTML = `
+                <div class="detail-title">${command.name}</div>
+                <div class="detail-description">${command.description}</div>
+                <div style="margin-bottom: 20px;">
+                    ${command.technologies.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                </div>
+                <div class="examples">
+                    <h3>示例：</h3>
+                    ${command.examples.map(example => `
+                        <div class="example">
+                            <div class="example-title">${example.title}</div>
+                            <div class="example-code">${example.code}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            document.getElementById('detailView').style.display = 'block';
+            document.getElementById('commandsGrid').style.display = 'none';
+        }
+
+        function hideDetail() {
+            document.getElementById('detailView').style.display = 'none';
+            document.getElementById('commandsGrid').style.display = 'grid';
+        }
+
+        function filterCommands(category) {
+            const filtered = category === 'all' ? backendTechnologies : backendTechnologies.filter(cmd => cmd.category === category);
+            renderCommands(filtered);
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+        }
+
+        function searchCommands(query) {
+            const filtered = backendTechnologies.filter(cmd => 
+                cmd.name.toLowerCase().includes(query.toLowerCase()) ||
+                cmd.description.toLowerCase().includes(query.toLowerCase()) ||
+                cmd.technologies.some(tech => tech.toLowerCase().includes(query.toLowerCase()))
+            );
+            renderCommands(filtered);
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchCommands(e.target.value);
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterCommands(btn.dataset.category);
+            });
+        });
+
+        // Initialize
+        renderCommands();
+    </script>
+</body>
+</html>

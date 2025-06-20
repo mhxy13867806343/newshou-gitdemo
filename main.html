@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给新手朋友学习技术文档中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .contact-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .tech-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .tech-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .tech-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .tech-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>后端技术文档中心</h1>
+            <p>全面开发技术文档，包含详细的命令参考、最佳实践和实用示例</p>
+            
+            <div class="contact-info">
+                <h3>📞 联系方式 & 相关链接</h3>
+                <div class="contact-links">
+                    <a href="https://github.com/mhxy13867806343/newshou-gitdemo.git" target="_blank">
+                        🔗 项目仓库
+                    </a>
+                    <a href="mailto:869710179@qq.com">
+                        📧 邮箱联系
+                    </a>
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=udXaytje0NHW1tLK_d-WwdTY0NWX2tbU" target="_blank">
+                        <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" alt="QQ邮箱" style="height: 16px;"/>
+                        QQ邮箱
+                    </a>
+                    <a href="https://blog.lcs200.icu/" target="_blank">
+                        🌐 个人博客
+                    </a>
+                    <a href="https://github.com/mhxy13867806343?tab=repositories" target="_blank">
+                        📚 GitHub仓库
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tech-grid">
+            <a href="git-docs.html" class="tech-card">
+                <span class="tech-icon">🔧</span>
+                <div class="tech-title">Git 版本控制</div>
+                <div class="tech-description">
+                    完整的 Git 命令参考手册，包含分支管理、远程操作、版本回退等核心功能的详细示例
+                </div>
+            </a>
+
+            <a href="mysql-docs.html" class="tech-card">
+                <span class="tech-icon">🗄️</span>
+                <div class="tech-title">MySQL 数据库</div>
+                <div class="tech-description">
+                    MySQL 数据库管理和 SQL 查询语言完整指南，涵盖数据操作、索引优化、存储过程等
+                </div>
+            </a>
+
+            <a href="redis-docs.html" class="tech-card">
+                <span class="tech-icon">⚡</span>
+                <div class="tech-title">Redis 缓存</div>
+                <div class="tech-description">
+                    Redis 内存数据库和缓存系统文档，包含数据结构、持久化、集群配置等高级特性
+                </div>
+            </a>
+
+            <a href="backend-docs.html" class="tech-card">
+                <span class="tech-icon">🚀</span>
+                <div class="tech-title">后端技术栈</div>
+                <div class="tech-description">
+                    Node.js、Python、Java 等后端技术栈文档，包含框架使用、API 设计、部署运维等
+                </div>
+            </a>
+
+            <a href="frontend-docs.html" class="tech-card">
+                <span class="tech-icon">🎨</span>
+                <div class="tech-title">前端技术栈</div>
+                <div class="tech-description">
+                    HTML、CSS、JavaScript和现代前端框架完整指南
+                </div>
+            </a>
+        </div>
+
+        <div class="features">
+            <h2>文档特色</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🔍</span>
+                    <div class="feature-title">智能搜索</div>
+                    <div class="feature-desc">快速搜索命令、函数和配置项，支持模糊匹配和分类筛选</div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📝</span>
+                    <div class="feature-title">详细示例</div>
+                    <div class="feature-desc">每个命令都包含多个实用示例和详细解释，便于理解和应用</div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <div class="feature-title">响应式设计</div>
+                    <div class="feature-desc">适配各种设备屏幕，随时随地查阅技术文档</div>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <div class="feature-title">分类清晰</div>
+                    <div class="feature-desc">按功能模块分类整理，快速定位所需的技术内容</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
